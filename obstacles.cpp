@@ -36,36 +36,11 @@ void Obstacle::render_obstacle()
   glEnd();
 }
 
-// ObstacleList::ObstacleList()
-// {
-//   // this->list_size = 1000;
-//   // this->obs_list = new Obstacle*[this->list_size];
-// }
-
-// ObstacleList::ObstacleList(int size)
-// {
-//   this->list_size = size;
-//   this->obs_list = new Obstacle*[this->list_size];
-// }
-
-// void ObstacleList::generate_obstacles()
-// {
-//   this->obs_list[0] = new Obstacle(obs_start_pos, 300);
-//
-//   for (int i = 1; i < obs_no; i++)
-//    {
-//      int pos = this->obs_list[i-1]->position + obs_gap;
-//      int op = (rand() % (win_height - boundary_width*2 - opening_width - obs_offset)) \
-//       + (boundary_width + obs_offset);
-//
-//      free(this->obs_list[i]);
-//      this->obs_list[i] = new Obstacle(pos, op);
-//    }
-// }
 ObstacleList::ObstacleList()
 {
   this->obs_list_head = NULL;
   this->obs_list_rear = NULL;
+  this->generate_obstacles();
 }
 
 void ObstacleList::generate_obstacles()

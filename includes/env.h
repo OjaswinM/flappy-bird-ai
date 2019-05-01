@@ -2,10 +2,16 @@
 #define ENV_H
 
 /* Game and window related constants */
-#define g 0.04
+#define g 0.05
 #define boundary_width 50
 #define win_height 500
 #define win_width 1000
+
+/* Game over menu */
+#define go_menu_x 700
+#define go_menu_y 350
+#define go_menu_width 200
+#define go_menu_height 150
 
 /* Obstacles related constants */
 #define obs_width 55
@@ -21,7 +27,7 @@
 #define bird_y 200
 #define bird_size 10
 #define jump_speed 0.1
-#define jump_acceleration 0.22
+#define jump_acceleration 0.26
 #define jump_acc_time 1
 
 /* misc constants */

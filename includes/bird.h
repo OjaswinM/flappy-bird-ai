@@ -7,13 +7,11 @@
 class Bird
 {
 public:
-  int x, y;
-  float ver_speed;
-  int time, last_jump_time;
-  float jump_acc;
+  int x, y, time, last_jump_time, score;
+  float ver_speed, jump_acc;
+  bool game_over;
   Obstacle* next_obs = NULL;
 
-  Bird();
   Bird(ObstacleList ol);
   void render_bird();
   /* update bird's position for the next frame based on gravity and
@@ -22,6 +20,7 @@ public:
   void jump();
   /* Check if the upcoming obstacle has been crossed */
   bool has_crossed();
+  bool has_collided();
 };
 
 #endif
