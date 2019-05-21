@@ -1,6 +1,7 @@
 #include<GL/glut.h>
 #include "obstacles.h"
 #include "env.h"
+#include <time.h>
 
 //Obstacle constructors
 Obstacle::Obstacle()
@@ -11,10 +12,21 @@ Obstacle::Obstacle()
 
 Obstacle::Obstacle(int pos, int op)
 {
+  this->init_position = pos;
   this->position = pos;
   this->opening = op;
   this->next_obs = NULL;
   this->prev_obs = NULL;
+}
+
+void Obstacle::reset()
+{
+  this->position = this->init_position;
+}
+
+void Obstacle::update_pos()
+{
+  this->position -= obs_speed;
 }
 
 void Obstacle::render_obstacle()
@@ -45,7 +57,7 @@ ObstacleList::ObstacleList()
 
 void ObstacleList::generate_obstacles()
 {
-
+  srand(time(0));
   for (int i = 0; i < obs_no; i++)
    {
      int pos;
@@ -70,11 +82,9 @@ void ObstacleList::update_pos()
   it = this->obs_list_head;
 
   while (it != NULL) {
-    it->position -= obs_speed;
+    it->update_pos();
     it = it->next_obs;
   }
-
-  glutPostRedisplay();
 }
 
 void ObstacleList::add_rear(Obstacle *obs)
@@ -114,5 +124,21 @@ void ObstacleList::display_list()
   {
     it = it->next_obs;
     count++;
+  }
+}
+
+void ObstacleList::reset_list()
+{
+  // srand(time(0));
+  Obstacle *obs;
+  obs = this->obs_list_head;
+  int op = (rand() % (win_height - boundary_width*2 - opening_width - obs_offset)) \
+  + (boundary_width + obs_offset);
+
+  while(obs != NULL)
+  {
+    obs->reset();
+    obs->opening = op;
+    obs = obs->next_obs;
   }
 }

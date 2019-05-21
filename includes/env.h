@@ -20,7 +20,7 @@
 #define obs_no 10000
 #define obs_offset 30
 #define obs_speed 4
-#define obs_start_pos 1500
+#define obs_start_pos 500
 
 /* Bird related constants */
 #define bird_x 250
@@ -30,7 +30,14 @@
 #define jump_acceleration 0.26
 #define jump_acc_time 1
 
+/* Neural network related constants */
+#define time_bw_jumps 10
+#define population_size 20
+#define no_of_layers 3
+#define mut_rate 5
+//#define learn_rate 0.001
+#define disc_factor 0.6
+
 /* misc constants */
 #define SPACEBAR 32
 
-#endif

@@ -3,6 +3,7 @@
 
 class Obstacle {
 public:
+  int init_position;
   int position;
   int opening;
   Obstacle *next_obs;
@@ -11,6 +12,8 @@ public:
   Obstacle();
   Obstacle(int pos, int op);
   void render_obstacle();    //render obstacles
+  void update_pos();
+  void reset();
 };
 
 class ObstacleList {
@@ -25,6 +28,7 @@ public:
   void generate_obstacles();    // generate obstacles with random openings
   void update_pos();    //update position of obstacles after each display cycle
   void display_list();
+  void reset_list();
 };
 
 
