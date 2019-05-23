@@ -129,14 +129,14 @@ void ObstacleList::display_list()
 
 void ObstacleList::reset_list()
 {
-  // srand(time(0));
+  //srand(time(0));
   Obstacle *obs;
   obs = this->obs_list_head;
-  int op = (rand() % (win_height - boundary_width*2 - opening_width - obs_offset)) \
-  + (boundary_width + obs_offset);
 
   while(obs != NULL)
   {
+    int op = (rand() % (win_height - boundary_width*2 - opening_width - obs_offset)) \
+    + (boundary_width + obs_offset);
     obs->reset();
     obs->opening = op;
     obs = obs->next_obs;

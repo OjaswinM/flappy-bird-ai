@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 {
 
   srand(time(0));
-    struct fann* ann = fann_create_from_file("trained_network_bak");
+    struct fann* ann = fann_create_from_file("good_network");
     nb.ann = fann_copy(ann);
     glutInit(&argc, argv);
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
@@ -76,7 +76,7 @@ void display()
       nb.Bird::render_bird();
       ol.render_obstacles();
       update_positions();
-      render_score(nb.score);
+      //render_score(nb.score);
     } else {
       game_over();
     }

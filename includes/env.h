@@ -31,8 +31,8 @@
 #define jump_acc_time 1
 
 /* Neural network related constants */
-#define time_bw_jumps 10
-#define population_size 20
+#define time_bw_jumps 15
+#define population_size 10
 #define no_of_layers 3
 #define mut_rate 5
 //#define learn_rate 0.001
@@ -41,3 +41,4 @@
 /* misc constants */
 #define SPACEBAR 32
 
+#endif

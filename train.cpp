@@ -17,7 +17,7 @@ int main()
 
   for (int i=0; i<200; i++) {
 
-    if(ga.population[0]->score > 8) {
+    if(ga.population[0]->score > 15) {
       fann_save(ga.population[0]->ann, "good_network");
     }
 

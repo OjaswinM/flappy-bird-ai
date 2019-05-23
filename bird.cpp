@@ -113,8 +113,8 @@ bool Bird::has_collided(Obstacle* o)
   bool collision_x = ((this->x + bird_size/2) > o->position) && \
     ((this->x - bird_size/2) < (o->position + obs_width));
 
-  bool collision_y = ((this->y + bird_size/2) < o->opening) || \
-    ((this->y - bird_size/2) > (o->opening + opening_width));
+  bool collision_y = ((this->y - bird_size/2) < o->opening) || \
+    ((this->y + bird_size/2) > (o->opening + opening_width));
 
   bool collision_boundary = ((this->y + bird_size/2) > (win_height - boundary_width)) || \
     ((this->y - bird_size/2) < boundary_width);

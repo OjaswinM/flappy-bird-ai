@@ -24,6 +24,10 @@ void GA::init_rand_pop()
   for (int i = 0; i < this->pop_size; i++) {
     this->population[i] = new NeuralBird(this->ol, this->num_layers, this->layers);
   }
+
+  struct fann* ann = fann_create_from_file("good_network");
+  this->population[0]->ann = fann_copy(ann);
+  this->population[1]->ann = fann_copy(ann);  
 }
 
 int GA::simulate_game(NeuralBird *nb, ObstacleList ol)
@@ -31,9 +35,9 @@ int GA::simulate_game(NeuralBird *nb, ObstacleList ol)
   ol.reset_list();
   nb->reset(ol);
 
-  while (!nb->game_over) {
-    nb->Bird::update_pos();
+  while (!nb->game_over && nb->score < 100) {
     ol.update_pos();
+    nb->Bird::update_pos();
 
     if (nb->should_jump()) {
       nb->Bird::jump();
@@ -52,6 +56,7 @@ void GA::simulate_game_gen()
 
   this->iteration++;
   std::sort(this->population, this->population + pop_size, comp_fitness);
+  display_fitness(this->population);
 }
 
 void GA::display_fitness(NeuralBird** population)
@@ -86,16 +91,6 @@ void GA::crossover(NeuralBird *nb1, NeuralBird *nb2, NeuralBird **child)
   int crossover_pt = rand() % total_conn;
 
   for (int i=0; i<total_conn; i++) {
-    // Random mutation
-    // if ((rand() % 100) < mutation_rate) {
-    //   float rand_weight = rand_float(-1.0, 1.0);
-    //   child_conn[i].weight = rand_weight;
-    // } else if (i<crossover_pt) {
-    //   child_conn[i].weight	= connection1[i].weight;
-    // } else {
-    //   child_conn[i].weight = connection2[i].weight;
-    // }
-
     if ((rand() % 100) < mutation_rate) {
       float rand_weight = rand_float(-1.0, 1.0);
       child_conn[i].weight = rand_weight;
@@ -114,7 +109,6 @@ void GA::evolve()
 {
   NeuralBird *parent1, *parent2;
   this->last_population = new NeuralBird*[this->pop_size];
-  // std::copy(this->population, this->population + pop_size, this->last_population);
 
   for(int i=0; i<this->pop_size; i++)
   {
@@ -160,19 +154,8 @@ void GA::evolve()
     this->population[i] = this->last_population[winner];
   }
 
-  // for(int i=4; i<pop_size; i++)
-  // {
-  //   int index1 = rand() % num_winners;
-  //   int index2 = rand() % num_winners;
-  //   parent1 = this->last_population[index1];
-  //   parent2 = this->last_population[index2];
-  //
-  //   this->population[i] = new NeuralBird(*(this->last_population[i]));
-  //   this->crossover(parent1, parent2, this->population[i]);
-  // }
-
-  this->simulate_game_gen();
-  display_fitness(this->population);
+  //this->simulate_game_gen();
+  // display_fitness(this->last_population);
 }
 
 bool comp_fitness(NeuralBird *nb1, NeuralBird *nb2)
