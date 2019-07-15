@@ -14,13 +14,13 @@
 #define go_menu_height 150
 
 /* Obstacles related constants */
-#define obs_width 55
+#define obs_width 60
 #define opening_width 125
 #define obs_gap 300
 #define obs_no 10000
 #define obs_offset 30
 #define obs_speed 4
-#define obs_start_pos 500
+#define obs_start_pos 550
 
 /* Bird related constants */
 #define bird_x 250

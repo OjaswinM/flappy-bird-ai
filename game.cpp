@@ -17,6 +17,7 @@ void idle();
 void game_over();
 void update_positions();
 void render_score(int score);
+void render_welcome();
 
 bool game_started = false;
 bool ai_mode = false;
@@ -29,8 +30,8 @@ NeuralBird nb(ol, 3, layers);
 int main(int argc, char** argv)
 {
 
-  srand(time(0));
-    struct fann* ann = fann_create_from_file("good_network");
+    srand(time(0));
+    struct fann* ann = fann_create_from_file("flap_net");
     nb.ann = fann_copy(ann);
     glutInit(&argc, argv);
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
@@ -57,12 +58,17 @@ void display()
       glClearColor(0,0,0,0);
       glClear(GL_COLOR_BUFFER_BIT);
       glColor3f(1,1,1);
-      b.score=12;
+
+      if(!game_started) {
+        render_welcome();
+      } else {
+        render_score(b.score);
+      }
+
       render_outline();
       b.render_bird();
       ol.render_obstacles();
       update_positions();
-      //render_score(b.score);
     } else {
       game_over();
     }
@@ -72,11 +78,16 @@ void display()
       glClear(GL_COLOR_BUFFER_BIT);
       glColor3f(1,1,1);
 
+      if(!game_started) {
+        render_welcome();
+      } else {
+        render_score(nb.score);
+      }
+
       render_outline();
       nb.Bird::render_bird();
       ol.render_obstacles();
       update_positions();
-      //render_score(nb.score);
     } else {
       game_over();
     }
@@ -155,11 +166,30 @@ void game_over()
   }
 }
 
+void render_welcome()
+{
+  unsigned char wel_text[] = "Welcome! Press <Spacebar> to play the game or press 'q' to watch the AI play it";
+  int text_width = glutBitmapLength(GLUT_BITMAP_8_BY_13, wel_text);
+  /* Centre in the middle of the window */
+  glRasterPos2i(win_width/2 - text_width/2, 470);
+  /* Render the string */
+  int len = strlen((const char*)wel_text);
+  for (int i = 0; i < len; i++) {
+    glutBitmapCharacter(GLUT_BITMAP_8_BY_13, wel_text[i]);
+  }
+}
+
 void render_score(int score)
 {
-  unsigned char score_text[] = "Score: ";
+  unsigned char score_text[10] = "Score: ";
   int score_digits_rev[10], i=0, num_digit=0;
   int temp = score;
+
+  if(temp == 0) {
+    score_digits_rev[0] = 0;
+    num_digit++;
+  }
+
   while (temp) {
     score_digits_rev[i++] = temp % 10;
     temp /= 10;

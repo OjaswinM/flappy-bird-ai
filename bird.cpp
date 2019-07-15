@@ -173,8 +173,7 @@ bool NeuralBird::should_jump(fann_type* input)
   if (this->jump_decision[0] > 0.5 && last_time >= time_bw_jumps) {
     last_time = 0;
     return true;
-  }
-  else {
+  } else {
     last_time++;
     return false;
   }

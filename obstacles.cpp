@@ -62,7 +62,7 @@ void ObstacleList::generate_obstacles()
    {
      int pos;
      /* Random position for opening */
-     int op = (rand() % (win_height - boundary_width*2 - opening_width - obs_offset)) \
+     int op = (rand() % (win_height - (boundary_width*2+60) - opening_width - obs_offset)) \
      + (boundary_width + obs_offset);
 
      if ( this->obs_list_head == NULL ) {

@@ -27,7 +27,7 @@ void GA::init_rand_pop()
 
   struct fann* ann = fann_create_from_file("good_network");
   this->population[0]->ann = fann_copy(ann);
-  this->population[1]->ann = fann_copy(ann);  
+  this->population[1]->ann = fann_copy(ann);
 }
 
 int GA::simulate_game(NeuralBird *nb, ObstacleList ol)
@@ -69,14 +69,21 @@ void GA::display_fitness(NeuralBird** population)
 
 void GA::crossover(NeuralBird *nb1, NeuralBird *nb2, NeuralBird **child)
 {
+  /* Extract the ANNs of the parent birds */
   struct fann* ann1 = fann_copy(nb1->ann);
   struct fann* ann2 = fann_copy(nb2->ann);
   struct fann* child_ann = fann_copy(ann1);
+
+  /* Initialize child bird */
   *child = new NeuralBird(*nb1);
   (*child)->turns = 0;
   (*child)->total_fitness = 0;
   (*child)->avg_fitness = 0;
 
+  /*
+   * struct fann_connection is a structure that holds the connection data
+   * of an ANN
+   */
   int total_conn = fann_get_total_connections(ann1);
   struct fann_connection *connection1 = new struct fann_connection[total_conn];
   struct fann_connection *connection2 = new struct fann_connection[total_conn];
@@ -90,8 +97,13 @@ void GA::crossover(NeuralBird *nb1, NeuralBird *nb2, NeuralBird **child)
 
   int crossover_pt = rand() % total_conn;
 
+  /*
+   * During crossover, combine the biases of parent1 and parent2 to create the
+   * new child
+   */
   for (int i=0; i<total_conn; i++) {
     if ((rand() % 100) < mutation_rate) {
+      /* Perform a random mutation based on mutation_rate */
       float rand_weight = rand_float(-1.0, 1.0);
       child_conn[i].weight = rand_weight;
     } else if ( (connection1[i].from_neuron = 2 || connection1[i].from_neuron == 9) && i > crossover_pt ) {
@@ -153,9 +165,6 @@ void GA::evolve()
 
     this->population[i] = this->last_population[winner];
   }
-
-  //this->simulate_game_gen();
-  // display_fitness(this->last_population);
 }
 
 bool comp_fitness(NeuralBird *nb1, NeuralBird *nb2)
