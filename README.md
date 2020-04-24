@@ -33,4 +33,4 @@ The development of this project was divided into 2 major phases:-
     which was used to tweak the hyper paramaters of the network in order to maximise the final score.
     
  ---   
-*You can know more about the implementation and source code of the project [here](#)*
+*You can know more about the implementation and source code of the project [here](https://ojaswinm.github.io/post/fourth/)*
